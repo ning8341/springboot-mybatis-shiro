@@ -33,6 +33,7 @@ public class ShiroConfiguration {
 //        filterChainDefinitionMap.put("/templates/jsp/login.jsp*", "anon"); //anon表示可以匿名访问
         filterChainDefinitionMap.put("/loginUser", "anon");
         filterChainDefinitionMap.put("/logout*","anon");
+        filterChainDefinitionMap.put("/static/**","anon");
 //        filterChainDefinitionMap.put("/templates/jsp/error.jsp*","anon");
 //        filterChainDefinitionMap.put("/templates/jsp/index.jsp*","authc");
         filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
