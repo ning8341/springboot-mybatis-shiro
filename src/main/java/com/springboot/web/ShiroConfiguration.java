@@ -1,5 +1,6 @@
 package com.springboot.web;
 
+import com.springboot.shiro.AdminAuthorizationFilter;
 import com.springboot.shiro.AuthRealm;
 import com.springboot.shiro.CredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * shiro的配置类
@@ -28,12 +31,17 @@ public class ShiroConfiguration {
         //配置登录的url和登录成功的url
         bean.setLoginUrl("/login");
         bean.setSuccessUrl("/home");
+        //自定义拦截器
+        Map<String, Filter> filtersMap = new LinkedHashMap<>();
+        filtersMap.put("adminAuthorizationFilter", new AdminAuthorizationFilter());
+        bean.setFilters(filtersMap);
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap=new LinkedHashMap<>();
-//        filterChainDefinitionMap.put("/templates/jsp/login.jsp*", "anon"); //anon表示可以匿名访问
-        filterChainDefinitionMap.put("/loginUser", "anon");
+//        filterChainDefinitionMap.put("/loginUser", "anon");
+        filterChainDefinitionMap.put("/loginUser","adminAuthorizationFilter");
         filterChainDefinitionMap.put("/logout*","anon");
         filterChainDefinitionMap.put("/static/**","anon");
+
 //        filterChainDefinitionMap.put("/templates/jsp/error.jsp*","anon");
 //        filterChainDefinitionMap.put("/templates/jsp/index.jsp*","authc");
         filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
@@ -78,4 +86,6 @@ public class ShiroConfiguration {
         advisor.setSecurityManager(manager);
         return advisor;
     }
+
+
 }
