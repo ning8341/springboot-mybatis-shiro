@@ -28,16 +28,17 @@ public class ShiroConfiguration {
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager manager) {
         ShiroFilterFactoryBean bean=new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
-        //配置登录的url和登录成功的url
+        //配置登录的url和登录成功的url,配置未认证url
         bean.setLoginUrl("/login");
         bean.setSuccessUrl("/home");
+        bean.setUnauthorizedUrl("/error");
         //自定义拦截器
         Map<String, Filter> filtersMap = new LinkedHashMap<>();
         filtersMap.put("adminAuthorizationFilter", new AdminAuthorizationFilter());
         bean.setFilters(filtersMap);
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap=new LinkedHashMap<>();
-//        filterChainDefinitionMap.put("/loginUser", "anon");
+        filterChainDefinitionMap.put("/zeroException", "anon");
         filterChainDefinitionMap.put("/loginUser","adminAuthorizationFilter");
         filterChainDefinitionMap.put("/logout*","anon");
         filterChainDefinitionMap.put("/static/**","anon");

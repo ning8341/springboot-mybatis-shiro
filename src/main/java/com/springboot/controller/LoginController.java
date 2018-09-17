@@ -36,4 +36,9 @@ public class LoginController {
 //        session.removeAttribute("user");
         return "login";
     }
+    /**全局捕捉的异常信息demo*/
+    @RequestMapping("/zeroException")
+    public int zeroException(){
+        return 100/0;
+    }
 }
