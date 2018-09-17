@@ -28,12 +28,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-			<scope>true</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -125,6 +119,12 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- springloaded  hot deploy 热加载 谁用谁知道呀 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>springloaded</artifactId>
+			<version>1.2.4.RELEASE</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -136,12 +136,11 @@
 						<goals>
 							<goal>repackage</goal>
 						</goals>
+						<configuration>
+							<classifier>exec</classifier>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<!--fork :  如果没有该项配置则devtools不会起作用，即应用不会restart -->
-					<fork>true</fork>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
